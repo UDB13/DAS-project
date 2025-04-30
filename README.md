@@ -1,4 +1,4 @@
-# 🌍 Disaster Alert System
+# 🌍 Disaster Alert System ( DAS )
 
 A Django-based web application that provides real-time alerts for natural disasters using map visualization, user preferences, and global/regional filtering.
 
@@ -48,3 +48,4 @@ A Django-based web application that provides real-time alerts for natural disast
 
 - PostgreSQL is used in production; `.env` handles sensitive DB credentials.
 - Virtual environment and `.env` are excluded using `.gitignore`.
+- For fetching new data manually `python manage.py fetch_alerts` is a custom django management command. You may make the process automatic using task schedulers.
