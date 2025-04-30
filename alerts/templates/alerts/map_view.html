@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if region == 'global' %}
+    <h1>Global Disaster Alerts Map</h1>
+{% elif region == 'india' %}
+    <h1>India Disaster Alerts Map</h1>
+{% else %}
+    <h1>🔔 Your Personalized Disaster Alerts Map</h1>
+{% endif %}
+
+<div class="container" style="position: relative;">
+
+    <!-- Loading Spinner -->
+    <div id="loading" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
+        <strong>Loading Map...</strong>
+    </div>
+
+    <!-- Map Div -->
+    <div id="map" style="height: 600px; width: 100%; display: none;"></div>
+
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Marker Cluster CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+<!-- Marker Cluster JS -->
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Hide loading and show map once page loads
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("map").style.display = "block";
+    
+        var map = L.map('map').setView([20, 0], 2);
+    
+        // Base map layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+    
+        // Initialize marker cluster group
+        var markerCluster = L.markerClusterGroup();
+    
+        // Parse alert data safely
+        var alerts = {{ alerts|safe }};
+        console.log(alerts);
+    
+        // Add each alert as a marker
+        alerts.forEach(function(alert) {
+            if (alert.latitude && alert.longitude) {
+                var marker = L.marker([alert.latitude, alert.longitude])
+                    .bindPopup("<b>" + alert.title + "</b><br>Type: " + alert.event_type + "<br><a href='" + alert.source_url + "' target='_blank'>More Info</a>");
+                markerCluster.addLayer(marker);
+            }
+        });
+    
+        // Add all markers to the map
+        map.addLayer(markerCluster);
+    });
+    </script>
+    
+    {% endblock %}

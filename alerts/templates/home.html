@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    {% for alert in alerts %}
+        <div class="alert-card" style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            <h3>{{ alert.event_type }} — {{ alert.title }}</h3>
+            <p><strong>Location:</strong> {{ alert.location }}</p>
+            <p><strong>Date:</strong> {{ alert.timestamp }}</p>
+            <p><a href="{{ alert.source_url }}" target="_blank">View Source</a></p>
+        </div>
+    {% empty %}
+        <p>No alerts available at the moment.</p>
+    {% endfor %}
+
+    <!-- <hr> -->
+    <!-- <div class="auth-buttons">
+        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+    </div> -->
+</div>
+{% endblock %}

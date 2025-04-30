@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    {% if scope == 'user' %}
+    <h1>🔔 Your Personalized Disaster Alerts</h1>
+    {% elif scope == 'india' %}
+        <h1>India Disaster Alerts</h1>
+    {% else %}
+        <h1>Global Disaster Alerts</h1>
+    {% endif %}
+
+    {% if alerts %}
+        <ul class="list-group">
+            {% for alert in alerts %}
+                <li class="list-group-item">
+                    <h5>{{ alert.title }}</h5>
+                    <p>{{ alert.description }}</p>
+                    <p><strong>Event Type:</strong> {{ alert.event_type }}</p>
+                    <p><strong>Location:</strong> {{ alert.location }}</p>
+                    <p><strong>Timestamp:</strong> {{ alert.timestamp }}</p>
+                    {% if alert.source_url %}
+                        <p><a href="{{ alert.source_url }}" target="_blank">More Info</a></p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No alerts found for the selected scope.</p>
+    {% endif %}
+
+    <!-- <hr>
+    <div class="auth-buttons">
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    </div> -->
+</div>
+{% endblock %}

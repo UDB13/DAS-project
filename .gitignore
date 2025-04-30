@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+env/
+
+# Django stuff:
+*.log
+staticfiles/
+media/
+local_settings.py
+
+# PostgreSQL
+*.pgsql
+
+# OS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+#ENV File
+.env
